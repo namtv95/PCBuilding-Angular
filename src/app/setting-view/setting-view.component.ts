@@ -8,7 +8,7 @@ import { HardWare } from 'src/model/hardware';
 })
 export class SettingViewComponent implements OnInit {
 
-  @Input('hardwareList') hardwareList: Array<HardWare>;
+  @Input() hardwareList: Array<HardWare>;
   constructor() { }
 
   ngOnInit() {

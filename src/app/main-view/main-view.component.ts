@@ -29,16 +29,16 @@ export class MainViewComponent implements OnInit {
     private settingPopup: Popup
   ) {
     this.settingPopup.options = {
-      header: "Settings Computer",
-      color: "#02133f", // red, blue....
+      header: 'Settings Computer',
+      color: '#02133f', // red, blue....
       widthProsentage: 40, // The with of the popou measured by browser width
       animationDuration: 1, // in seconds, 0 = no animation
       showButtons: true, // You can hide this in case you want to use custom buttons
-      confirmBtnContent: "Save", // The text on your confirm button
-      cancleBtnContent: "Cancel", // the text on your cancel button
-      confirmBtnClass: "btn btn-primary ml-2", // your class for styling the confirm button
-      cancleBtnClass: "btn btn-danger", // you class for styling the cancel button
-      animation: "fadeInDown" // 'fadeInLeft', 'fadeInRight', 'fadeInUp', 'bounceIn','bounceInDown'
+      confirmBtnContent: 'Save', // The text on your confirm button
+      cancleBtnContent: 'Cancel', // the text on your cancel button
+      confirmBtnClass: 'btn btn-primary ml-2', // your class for styling the confirm button
+      cancleBtnClass: 'btn btn-danger', // you class for styling the cancel button
+      animation: 'fadeInDown' // 'fadeInLeft', 'fadeInRight', 'fadeInUp', 'bounceIn','bounceInDown'
     };
   }
 
@@ -46,10 +46,16 @@ export class MainViewComponent implements OnInit {
     this.loadHardwareSetting();
   }
 
+  /**
+   * Open setting hardware dialog
+   */
   public openSettingHardwareDialog(): void {
     this.settingPopup.show(this.settingPopup.options);
-  };
+  }
 
+  /**
+   * Update setting to aws server
+   */
   public updateSettingHanlder(): void {
     this.fileUtil.uploadFile(JSON.stringify(this.hardwareList), this.config.HARDWARE_SETTING_FILE);
     this.convertViewHardwareSetting(this.hardwareList);
@@ -72,7 +78,7 @@ export class MainViewComponent implements OnInit {
   private settingsDataResponseHandler = (settingData: any): void => {
     const settingDataString = String(settingData);
     if (settingDataString) {
-      let settings: Computer = new Computer();
+      const settings: Computer = new Computer();
       settings.computer = JSON.parse(settingDataString);
       if (settings.computer) {
         this.convertViewHardwareSetting(settings.computer);
@@ -82,6 +88,7 @@ export class MainViewComponent implements OnInit {
 
   /**
    * Error handler
+   * Upload default setting to aws s3
    */
   private errorDataResponseHandler = (error: any): void => {
     if (error.code === 'NoSuchKey') {
@@ -93,7 +100,7 @@ export class MainViewComponent implements OnInit {
 
   /**
    * Convert setting to view
-   * @param setting 
+   * @param setting setting list
    */
   private convertViewHardwareSetting(setting: Array<HardWare>): void {
     this.hardwareList = setting;
@@ -101,7 +108,7 @@ export class MainViewComponent implements OnInit {
     this.convertPrice();
   }
 
-  8/**
+  /**
    * Convert price of hardware for display
    */
   private convertPrice(): void {
@@ -112,19 +119,19 @@ export class MainViewComponent implements OnInit {
     let totalPrice: number = 0;
     this.hardwareDisplayList.map(item => {
       if (Number(item.oldPrice) === Number(item.currentPrice)) {
-        item['displayOldPrice'] = '';
+        item.displayOldPrice = '';
       } else {
-        item['displayOldPrice'] = this.formatPrice(item.oldPrice);
+        item.displayOldPrice = this.formatPrice(item.oldPrice);
       }
 
-      item['displayCurrentPrice'] = this.formatPrice(item.currentPrice);
+      item.displayCurrentPrice = this.formatPrice(item.currentPrice);
 
       if (item.countPrice) {
         totalPrice += Number(item.currentPrice);
       }
 
       return item;
-    })
+    });
 
     this.displayTotalPrice = this.formatPrice(totalPrice);
   }
