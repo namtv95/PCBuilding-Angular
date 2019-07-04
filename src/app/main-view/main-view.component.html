@@ -1,0 +1,55 @@
+<div class="background-color-overlay"></div>
+<div class="background-image-overlay"></div>
+<div class="container-fluid">
+  <div class="header">
+    <div class="black-line"></div>
+    <div class="banner-container">
+      <div class="banner-image"></div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="left-content">
+      <div class="demo-pc-content">
+        <div class="demo-pc-image" (click)="openSettingHardwareDialog();"></div>
+      </div>
+      <div class="total-price">
+        {{ displayTotalPrice }}
+      </div>
+
+    </div>
+    <div class="right-content">
+      <div class="right-content-main">
+        <div class="pc-information">
+          <span class="conner-icon conner-1"></span>
+          <span class="conner-icon conner-2"></span>
+          <span class="conner-icon conner-3"></span>
+          <span class="conner-icon conner-4"></span>
+
+          <div class="pc-hardware-list">
+            <div *ngFor="let hardwareItem of hardwareDisplayList" class="pc-hardware-item">
+              <a class="pc-hardware-item-link" title="{{ hardwareItem.link }}" href="{{ hardwareItem.link }}"
+                target="_blank">
+                <div class="pc-hardware-image">
+                  <img src="{{ hardwareItem.image }}" />
+                </div>
+                <div class="pc-hardware-name">{{ hardwareItem.name }}</div>
+                <div class="pc-hardware-price">
+                  <span class="old-price">{{ hardwareItem.displayOldPrice }}</span>
+                  <span class="current-price">{{ hardwareItem.displayCurrentPrice }}</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="footer">
+    <div class="black-line"></div>
+  </div>
+
+  <popup (confirmClick)="updateSettingHanlder();">
+    <app-setting-view [hardwareList]="hardwareList"></app-setting-view>
+  </popup>
+</div>

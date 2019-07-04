@@ -1,0 +1,36 @@
+<div class="setting-popup-container">
+  <div *ngFor="let hardwareItem of hardwareList" class="hardware-settings-item">
+    <div class="form-group row">
+      <label for="name" class="col-sm-2 col-form-label">{{ hardwareItem.type.toUpperCase() }}</label>
+      <div class="col-sm-10">
+        <input [(ngModel)]="hardwareItem.name" type="text" class="form-control" placeholder="Enter name here">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <input [(ngModel)]="hardwareItem.image" type="text" class="form-control" placeholder="Enter image here">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <input [(ngModel)]="hardwareItem.link" type="text" class="form-control" placeholder="Enter link here">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <input [(ngModel)]="hardwareItem.currentPrice" type="number" class="form-control"
+          placeholder="Enter price here">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-3" style="max-width: 20%;"></div>
+      <div class="col-sm-9">
+        <input [(ngModel)]="hardwareItem.countPrice" type="checkbox" class="form-check-input">
+        <label class="form-check-label" for="count-price-check">Count Price</label>
+      </div>
+    </div>
+  </div>
+</div>

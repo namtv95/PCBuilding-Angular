@@ -1,0 +1,253 @@
+.background-image-overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-image: url('/assets/images/img-body-background.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: top center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.background-color-overlay {
+  background-color: rgba(10, 9, 23, 0.95);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+}
+
+.container-fluid {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  font-family: 'karle';
+  z-index: 2;
+  position: relative;
+
+  .header {
+    height: 179px;
+
+    .black-line {
+      position: absolute;
+      top: 41px;
+    }
+
+    .banner-container {
+      top: -36px;
+      left: 720px;
+      position: absolute;
+      width: 500px;
+      z-index: 3;
+
+      .banner-image {
+        background-image: url('/assets/images/banner.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        width: auto;
+        height: 261px;
+      }
+    }
+
+  }
+
+  .content {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+
+    .left-content {
+      min-width: 560px;
+      height: 100%;
+    }
+
+    .right-content {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .footer {
+    .black-line {
+      margin-bottom: 39px;
+    }
+  }
+
+  .black-line {
+    width: 100%;
+    height: 102px;
+    background-color: black;
+    border-bottom: 2px solid aqua;
+    border-top: 2px solid aqua;
+  }
+}
+
+.left-content {
+  .demo-pc-content {
+    position: relative;
+
+    .demo-pc-image {
+      position: absolute;
+      width: 300px;
+      height: 400px;
+      background-image: url('/assets/images/img-demo-pc.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      left: 186px;
+      top: 117px;
+      animation-duration: 1s;
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+      -webkit-animation-timing-function: ease-in-out;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+      -webkit-animation-iteration-count: infinite;
+
+      &:hover {
+        cursor: pointer;
+        animation-name: bounce;
+        -moz-animation-name: bounce;
+      }
+    }
+  }
+
+  .total-price {
+    font-size: 3em;
+    color: gold;
+    position: absolute;
+    top: 718px;
+    left: 200px;
+    animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    cursor: pointer;
+    animation-name: bounce;
+    -moz-animation-name: bounce;
+  }
+}
+
+.right-content {
+  .right-content-main {
+    padding: 10px;
+
+    .pc-information {
+      width: 1100px;
+      height: auto;
+      position: relative;
+      border: 2px solid aqua;
+      -webkit-box-shadow: 0px 0px 10px 2px rgba(0, 255, 255, 0.5);
+      -moz-box-shadow: 0px 0px 10px 2px rgba(0, 255, 255, 0.5);
+      box-shadow: 0px 0px 10px 2px rgba(0, 255, 255, 0.5);
+
+      .conner-icon {
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        border: 0;
+      }
+
+      .conner-1 {
+        border-left: 4px solid aqua;
+        border-top: 4px solid aqua;
+        top: 0;
+        left: 0;
+      }
+
+      .conner-2 {
+        border-top: 4px solid aqua;
+        border-right: 4px solid aqua;
+        top: 0;
+        right: 0;
+      }
+
+      .conner-3 {
+        border-right: 4px solid aqua;
+        border-bottom: 4px solid aqua;
+        bottom: 0;
+        right: 0;
+      }
+
+      .conner-4 {
+        border-left: 4px solid aqua;
+        border-bottom: 4px solid aqua;
+        bottom: 0;
+        left: 0;
+      }
+
+      .pc-hardware-list {
+        padding: 25px;
+
+        .pc-hardware-item {
+          padding: 10px 40px;
+          height: auto;
+          border-bottom: 1px solid aqua;
+          transition: transform .2s;
+          background-color: rgb(0, 0, 0, 0.5);
+
+          &:hover {
+            transform: scale(1.1);
+            border-radius: 4px;
+            border: 1px solid aqua;
+            -webkit-box-shadow: 0px 0px 20px 5px rgba(0, 255, 255, 0.5);
+            -moz-box-shadow: 0px 0px 20px 5px rgba(0, 255, 255, 0.5);
+            box-shadow: 0px 0px 20px 5px rgba(0, 255, 255, 0.5);
+          }
+
+          .pc-hardware-item-link {
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+
+            &:hover {
+              text-decoration: none;
+              color: aqua;
+            }
+
+            .pc-hardware-image {
+              width: 150px;
+              height: 60px;
+
+              img {
+                width: auto;
+                height: 60px;
+              }
+            }
+
+            .pc-hardware-name {
+              width: 650px;
+              font-size: 1.2em;
+            }
+
+            .pc-hardware-price {
+              span {
+                display: block;
+
+                &.old-price {
+                  color: red;
+                  text-decoration: line-through;
+                }
+
+                &.current-price {
+                  font-size: 16px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

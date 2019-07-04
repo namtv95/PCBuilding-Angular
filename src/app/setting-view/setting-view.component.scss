@@ -1,0 +1,17 @@
+.setting-popup-container {
+  width: 700px;
+  height: 50vh;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-right: auto;
+  margin-left: auto;
+  overflow-y: auto;
+
+  .hardware-settings-item {
+    margin-bottom: 40px;
+
+    .col-form-label {
+      font-weight: bold;
+    }
+  }
+}
