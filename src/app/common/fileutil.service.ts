@@ -76,13 +76,7 @@ export class FileutilService {
    * Get newset price from  selling website
    */
   public getWebsiteData(urlWebsite: string, dataCallbackFunction: any = null, errorCallbackFunction: any = null): void {
-    const headers = new HttpHeaders({
-      'Content-Type': 'text/plain; charset=utf-8',
-      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE, PUT',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'X-Requested-With,content-type'
-    });
-    this.http.get(urlWebsite, { headers, responseType: 'text' }).subscribe(
+    this.http.get(urlWebsite, { responseType: 'text' }).subscribe(
       data => {
         // Read the result field from the JSON response.
         if (data && dataCallbackFunction) {
