@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HardWare } from 'src/model/hardware';
-import { FileutilService } from '../common/file-util/fileutil.service';
+import { FileutilService } from '../common/fileutil.service';
 import { Config } from '../common/config';
 import { Computer } from 'src/model/computer';
 import { Popup } from 'ng2-opd-popup';
+import { CommonService } from '../common/common.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-main-view',
@@ -21,10 +23,11 @@ export class MainViewComponent implements OnInit {
    */
   hardwareDisplayList: Array<HardWare> = [];
   displayTotalPrice: string = '';
-
+  websitePriceDom: any = null;
 
   constructor(
     private fileUtil: FileutilService,
+    private common: CommonService,
     private config: Config,
     private settingPopup: Popup
   ) {
@@ -51,6 +54,9 @@ export class MainViewComponent implements OnInit {
    */
   public openSettingHardwareDialog(): void {
     this.settingPopup.show(this.settingPopup.options);
+    setTimeout(() => {
+      $('#ng2-opd-popup-main').css('top', '10%');
+    }, 0);
   }
 
   /**
@@ -60,6 +66,24 @@ export class MainViewComponent implements OnInit {
     this.fileUtil.uploadFile(JSON.stringify(this.hardwareList), this.config.HARDWARE_SETTING_FILE);
     this.convertViewHardwareSetting(this.hardwareList);
     this.settingPopup.hide();
+  }
+
+  /**
+   * Update newest price of computer
+   */
+  public updateNewestPrice(): void {
+    $('.loading-overlay').css('display', 'block');
+    this.hardwareList.forEach((item, index) => {
+      this.getNewestPriceItem(item, (newPrice: number) => {
+        this.hardwareList[index].oldPrice = item.currentPrice;
+        this.hardwareList[index].currentPrice = newPrice;
+        if (index === this.hardwareList.length - 1) {
+          this.fileUtil.uploadFile(JSON.stringify(this.hardwareList), this.config.HARDWARE_SETTING_FILE);
+          this.convertViewHardwareSetting(this.hardwareList);
+          $('.loading-overlay').css('display', 'none');
+        }
+      });
+    });
   }
 
   /**
@@ -121,10 +145,10 @@ export class MainViewComponent implements OnInit {
       if (Number(item.oldPrice) === Number(item.currentPrice)) {
         item.displayOldPrice = '';
       } else {
-        item.displayOldPrice = this.formatPrice(item.oldPrice);
+        item.displayOldPrice = this.common.formatPrice(item.oldPrice);
       }
 
-      item.displayCurrentPrice = this.formatPrice(item.currentPrice);
+      item.displayCurrentPrice = this.common.formatPrice(item.currentPrice);
 
       if (item.countPrice) {
         totalPrice += Number(item.currentPrice);
@@ -133,13 +157,40 @@ export class MainViewComponent implements OnInit {
       return item;
     });
 
-    this.displayTotalPrice = this.formatPrice(totalPrice);
+    this.displayTotalPrice = this.common.formatPrice(totalPrice);
   }
 
   /**
-   * Format price to vnd
+   * Get newest price in website
+   * @param hardware hardware
+   * @param newPriceReponseHanlder callback function for get price
    */
-  private formatPrice(price: number) {
-    return Number(price).toLocaleString() + ' đ';
+  private getNewestPriceItem(hardware: HardWare, newPriceReponseHanlder: any): void {
+    if (!hardware.link) {
+      return;
+    }
+
+    const domain: string = this.common.getWebsiteDomain(hardware.link);
+    let priceClass: string = '';
+
+    this.fileUtil.getWebsiteData(hardware.link,
+      (htmlData: any) => {
+        const dataHtml = htmlData;
+        if (this.websitePriceDom === null) {
+          this.fileUtil.loadFile(this.config.WEBSITE_PRICE_DOM,
+            (fileData: any) => {
+              this.websitePriceDom = JSON.parse(String(fileData));
+              priceClass = this.websitePriceDom[domain];
+              const priceNumber: number = Number(this.common.getPriceFromHtml(dataHtml, priceClass));
+              newPriceReponseHanlder(priceNumber);
+            }
+          );
+        } else {
+          priceClass = this.websitePriceDom[domain];
+          const priceNumber: number = Number(this.common.getPriceFromHtml(dataHtml, priceClass));
+          newPriceReponseHanlder(priceNumber);
+        }
+      }
+    );
   }
 }

@@ -1,5 +1,17 @@
 <div class="background-color-overlay"></div>
 <div class="background-image-overlay"></div>
+<div class="loading-overlay">
+  <div class="lds-roller">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
 <div class="container-fluid">
   <div class="header">
     <div class="black-line"></div>
@@ -10,7 +22,14 @@
   <div class="content">
     <div class="left-content">
       <div class="demo-pc-content">
-        <div class="demo-pc-image" (click)="openSettingHardwareDialog();"></div>
+        <div class="demo-pc-image">
+          <button class="btn-overplay btn-setting" (click)="openSettingHardwareDialog();">
+            <i class="btn-icon btn-setting-icon"></i>
+          </button>
+          <button class="btn-overplay btn-update" (click)="updateNewestPrice();">
+            <i class="btn-icon btn-update-icon"></i>
+          </button>
+        </div>
       </div>
       <div class="total-price">
         {{ displayTotalPrice }}

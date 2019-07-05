@@ -21,6 +21,7 @@
     "@angular/router": "~8.0.1",
     "aws-sdk": "^2.486.0",
     "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
     "ng2-opd-popup": "^1.1.21",
     "rxjs": "~6.4.0",
     "rxjs-compat": "^6.5.2",

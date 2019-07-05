@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as S3 from 'aws-sdk/clients/s3';
-import { Config } from '../config';
+import { Config } from './config';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Injectable({
@@ -10,7 +11,8 @@ export class FileutilService {
   bucket: S3 = null;
 
   constructor(
-    private config: Config
+    private config: Config,
+    private http: HttpClient
   ) {
     this.bucket = new S3(
       {
@@ -27,7 +29,7 @@ export class FileutilService {
    * @param dataCallbackFunction success callback function
    * @param errorCallbackFunction failed callback function
    */
-  public loadFile(fileUrl: string, dataCallbackFunction: (data: any) => void, errorCallbackFunction: (error: any) => void): void {
+  public loadFile(fileUrl: string, dataCallbackFunction: any = null, errorCallbackFunction: any = null): void {
     const params: any = {
       Bucket: this.config.BUCKET_NAME,
       Key: fileUrl
@@ -35,9 +37,13 @@ export class FileutilService {
 
     this.bucket.getObject(params, (error, data) => {
       if (error != null) {
-        errorCallbackFunction(error);
+        if (errorCallbackFunction) {
+          errorCallbackFunction(error);
+        }
       } else {
-        dataCallbackFunction(data.Body);
+        if (dataCallbackFunction) {
+          dataCallbackFunction(data.Body);
+        }
       }
     });
   }
@@ -64,5 +70,31 @@ export class FileutilService {
       console.log('Successfully uploaded file.', data);
       return true;
     });
+  }
+
+  /**
+   * Get newset price from  selling website
+   */
+  public getWebsiteData(urlWebsite: string, dataCallbackFunction: any = null, errorCallbackFunction: any = null): void {
+    const headers = new HttpHeaders({
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE, PUT',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'X-Requested-With,content-type'
+    });
+    this.http.get(urlWebsite, { headers, responseType: 'text' }).subscribe(
+      data => {
+        // Read the result field from the JSON response.
+        if (data && dataCallbackFunction) {
+          dataCallbackFunction(data);
+        }
+      },
+      error => {
+        console.log(error);
+        if (errorCallbackFunction) {
+          errorCallbackFunction(error);
+        }
+      }
+    );
   }
 }

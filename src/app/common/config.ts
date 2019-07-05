@@ -12,4 +12,5 @@ export class Config {
   readonly HARDWARE_SETTING_FILE: string = 'hardware_setting.json';
   readonly SIGNED_URL_EXPIRE_SECONDS: number = 60 * 5; // your expiry time in seconds.
   readonly DEFAULT_SETTINGS_FILE: string = './assets/default_settings.json';
+  readonly WEBSITE_PRICE_DOM: string = this.DEFAULT_SAVE_FOLDER + 'website_dom.json';
 }
